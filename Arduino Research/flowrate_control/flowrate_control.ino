@@ -10,6 +10,7 @@
   Load cell capabilities  
 */
 
+// 11:50AM
 
 
 
@@ -23,7 +24,7 @@ long start;
 // ---------------------------------------------------- //
 
 // ----------------- DEFINES FOR SECTIONS -------------- //
-#define PRINT_RAW_FORCE // print the raw force values in the function
+#define PRINT_TO_SERIAL // print the raw force values in the function
 
 //#define FILTER_AVG
 //#define FILTER_IIR
@@ -753,7 +754,7 @@ void print_stuff()
 
                   
                       
-#ifdef PRINT_RAW_FORCE
+#ifdef PRINT_TO_SERIAL
 	{
 		// Print out time stamp and forces
 		Serial.print(timeStamp);
