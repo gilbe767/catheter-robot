@@ -66,8 +66,8 @@ float V_UPPER = 0.020*RESISTANCE;
 
 //#define EFFECTIVE_BITS (V_UPPER - V_LOWER)/5.0; // bits used that can be used
 
-float LVDT_BITS_LOWER = 0;    // Fully extened 0.4mA state
-float LVDT_BITS_UPPER = 729; // Compressed 0.21mA state
+float LVDT_BITS_LOWER = 179;    // Fully extened 0.4mA state
+float LVDT_BITS_UPPER = 976; // Compressed 0.21mA state
 
 // Linear Calibration Factors y = M*(x-B)
 float M_LVDT  = TRANSDUCER_RANGE / (LVDT_BITS_UPPER-LVDT_BITS_LOWER) /1000.0; // [m/counts]
@@ -388,15 +388,15 @@ void pwm_motor()
   
   dt_stage = timeStamp - time_last_pwm;
   // update the every once in a while
-  if ( dt_stage > 10000)
+  if ( dt_stage > 3000)
   {
     dt_stage = 0;
     time_last_pwm = timeStamp;
   }
     
-  if ( dt_stage  <= 1000 )
+  if ( dt_stage  <= 500 )
   {
-    val = 120;
+    val = 255;
     dir = 1;
     actuate_forward();
   }
@@ -761,6 +761,7 @@ void print_stuff()
                 
             #ifdef LOAD_CELL_CONNECTED
                 Serial.print("\t"); Serial.print(force_calibrated,3); // calibrated force
+                Serial.print("\t"); Serial.print(force_raw);        // raw force
                 #ifdef FORCE_CONTROL
 		  Serial.print("\t"); Serial.print(force_raw);        // raw force
                   Serial.print("\t"); Serial.print(force_error);			// pwm value for pump
@@ -779,8 +780,7 @@ void print_stuff()
                 
             #ifdef PRESSURE_CONNECTED // Pressure Transducers print
                Serial.print("\t"); Serial.print(P1,4);
-               Serial.print("\t"); Serial.print(P2,4);
-               Serial.print("\t"); Serial.print(dP,4);     
+               Serial.print("\t"); Serial.print(P1_count);   
             #endif    
                 
                 
